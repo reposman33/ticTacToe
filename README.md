@@ -15,3 +15,6 @@ Would represent a plus if
 
 Project containing the build-file, the code and testcases.
 
+Application source code under - src/main/webapp/
+testcases under - test/js/
+
