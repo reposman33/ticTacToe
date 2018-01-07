@@ -13,8 +13,5 @@ Would represent a plus if
 
 # Expected Deliverables
 
-Project containing the build-file, the code and testcases.
-
-Application source code under - src/main/webapp/
-testcases under - test/js/
+Project containing the build, source code and testcases.
 
