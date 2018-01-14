@@ -1,4 +1,4 @@
-# Angular JS Exercise: TIC-TAC-TOE
+## Angular Exercise: TIC-TAC-TOE
 
  * Create a web interface that allows a user to play at tic tac toe
  * The interface should display a 3x3 grid where to play
@@ -11,7 +11,9 @@
 Would represent a plus if
  * The user can play against the computer
 
-# Expected Deliverables
+## Expected Deliverables
 
-Project containing the build, source code and testcases.
-
+* Has to be deployable, `npm install` should install all dependencies 
+and allow to run app from command line
+* Has to be testable, `npm test` should run all tests
+* Has repository created with git: there should be a git history which will show how the work has been realized
