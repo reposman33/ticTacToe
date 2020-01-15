@@ -1,0 +1,15 @@
+.cell {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 3rem;
+  background-color: #eee;
+  height: 50px;
+  width: 50px;
+  border: 1px solid #ccc;
+
+  &:hover {
+    cursor: pointer;
+    background-color: darken(#ccc, 20%);
+  }
+}

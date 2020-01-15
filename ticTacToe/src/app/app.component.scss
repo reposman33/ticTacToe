@@ -1,0 +1,49 @@
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas:
+    "cell-1 cell-2 cell-3"
+    "cell-4 cell-5 cell-6"
+    "cell-7 cell-8 cell-9";
+  grid-gap: 0;
+  height: 200px;
+  width: 200px;
+  margin: 0 auto;
+}
+
+.grid-cell-1 {
+  grid-area: cell-1;
+}
+
+.grid-cell-2 {
+  grid-area: cell-2;
+}
+
+.grid-cell-3 {
+  grid-area: cell-3;
+}
+
+.grid-cell-4 {
+  grid-area: cell-4;
+}
+
+.grid-cell-5 {
+  grid-area: cell-5;
+}
+
+.grid-cell-6 {
+  grid-area: cell-6;
+}
+
+.grid-cell-7 {
+  grid-area: cell-7;
+}
+
+.grid-cell-8 {
+  grid-area: cell-8;
+}
+
+.grid-cell-9 {
+  grid-area: cell-9;
+}
