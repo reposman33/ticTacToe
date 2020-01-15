@@ -1,5 +1,11 @@
 <div class="container">
   <app-cell
+    class="grid-cell-0"
+    cellNumber="0"
+    [clickCount]="clickCount"
+    (cellClickEvent)="cellClickEventHandler($event)"
+  ></app-cell>
+  <app-cell
     class="grid-cell-1"
     cellNumber="1"
     [clickCount]="clickCount"
@@ -47,10 +53,5 @@
     [clickCount]="clickCount"
     (cellClickEvent)="cellClickEventHandler($event)"
   ></app-cell>
-  <app-cell
-    class="grid-cell-9"
-    cellNumber="9"
-    [clickCount]="clickCount"
-    (cellClickEvent)="cellClickEventHandler($event)"
-  ></app-cell>
+  <span class="footer" *ngIf="winner">{{ winner }} heeft gewonnen!</span>
 </div>

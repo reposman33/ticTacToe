@@ -5,7 +5,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
   templateUrl: "./cell.component.html",
   styleUrls: ["./cell.component.scss"]
 })
-export class CellComponent implements OnInit {
+export class CellComponent {
   @Input() cellNumber: number;
   @Input() clickCount: number;
   @Output()
@@ -27,6 +27,4 @@ export class CellComponent implements OnInit {
       this.filled = true;
     }
   }
-
-  ngOnInit() {}
 }

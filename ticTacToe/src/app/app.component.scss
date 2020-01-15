@@ -3,13 +3,18 @@
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
   grid-template-areas:
-    "cell-1 cell-2 cell-3"
-    "cell-4 cell-5 cell-6"
-    "cell-7 cell-8 cell-9";
+    "cell-0 cell-1 cell-2"
+    "cell-3 cell-4 cell-5"
+    "cell-6 cell-7 cell-8"
+    "footer footer footer";
   grid-gap: 0;
   height: 200px;
   width: 200px;
   margin: 0 auto;
+}
+
+.grid-cell-0 {
+  grid-area: cell-0;
 }
 
 .grid-cell-1 {
@@ -44,6 +49,9 @@
   grid-area: cell-8;
 }
 
-.grid-cell-9 {
-  grid-area: cell-9;
+.footer {
+  grid-area: footer;
+  margin: 0 auto;
+  font-weight: bold;
+  font-size: 1.2rem;
 }
