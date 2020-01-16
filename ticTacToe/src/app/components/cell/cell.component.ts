@@ -8,6 +8,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 export class CellComponent {
   @Input() cellNumber: number;
   @Input() clickCount: number;
+  @Input() gameOver: boolean;
   @Output()
   cellClickEvent = new EventEmitter<object>();
   filled: boolean;
@@ -18,7 +19,7 @@ export class CellComponent {
   }
 
   onClick() {
-    if (!this.filled) {
+    if (!this.filled && !this.gameOver) {
       this.sign = this.clickCount % 2 ? "O" : "X";
       this.cellClickEvent.emit({
         cellNumber: this.cellNumber,

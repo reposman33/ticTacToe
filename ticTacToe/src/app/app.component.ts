@@ -10,17 +10,20 @@ export class AppComponent {
   clickCount: number;
   boardModel: Array<string | null>;
   winner: string;
+  gameOver: boolean;
 
   constructor() {
     this.title = "ticTacToe";
     this.clickCount = 0;
     this.boardModel = new Array(9);
     this.winner = "";
+    this.gameOver = false;
   }
 
   cellClickEventHandler(data: { cellNumber: number; sign: string }) {
     this.boardModel[data.cellNumber] = data.sign;
     this.winner = this.determineWinner();
+    this.gameOver = this.winner != "";
     this.clickCount++;
   }
 
