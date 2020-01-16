@@ -20,14 +20,19 @@ export class AppComponent {
   hilite_6: boolean;
   hilite_7: boolean;
   hilite_8: boolean;
+  score: object;
 
   constructor() {
     this.title = "ticTacToe";
     this.clickCount = 0;
-    this.boardModel = new Array(9);
+    this.score = { X: 0, O: 0 };
+    this.initGame();
+  }
+
+  initGame() {
+    this.boardModel = [null, null, null, null, null, null, null, null, null];
     this.winner = "";
     this.gameOver = false;
-
     this.hilite_0 = false;
     this.hilite_1 = false;
     this.hilite_2 = false;
@@ -42,8 +47,13 @@ export class AppComponent {
   cellClickEventHandler(data: { cellNumber: number; sign: string }) {
     this.boardModel[data.cellNumber] = data.sign;
     this.winner = this.determineWinner();
-    this.gameOver = this.winner != "";
+    if (this.winner != "") {
+      this.gameOver = true;
+      this.score[this.winner] += 1;
+    }
     this.clickCount++;
+    this.reset = false;
+    console.log(`this.reset = ${this.reset}`);
   }
 
   determineWinner() {
@@ -138,5 +148,9 @@ export class AppComponent {
       this[`hilite_${startIndex}`] = true;
       startIndex += 2;
     }
+  }
+
+  onGameOver() {
+    this.initGame();
   }
 }

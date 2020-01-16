@@ -2,74 +2,74 @@
   <app-cell
     class="grid-cell-0"
     cellNumber="0"
+    [clickCount]="clickCount"
     [gameOver]="gameOver"
     [highLight]="hilite_0"
-    [clickCount]="clickCount"
     (cellClickEvent)="cellClickEventHandler($event)"
   ></app-cell>
   <app-cell
     class="grid-cell-1"
     cellNumber="1"
+    [clickCount]="clickCount"
     [gameOver]="gameOver"
     [highLight]="hilite_1"
-    [clickCount]="clickCount"
     (cellClickEvent)="cellClickEventHandler($event)"
   ></app-cell>
   <app-cell
     class="grid-cell-2"
     cellNumber="2"
+    [clickCount]="clickCount"
     [gameOver]="gameOver"
     [highLight]="hilite_2"
-    [clickCount]="clickCount"
     (cellClickEvent)="cellClickEventHandler($event)"
   ></app-cell>
   <app-cell
     class="grid-cell-3"
     cellNumber="3"
+    [clickCount]="clickCount"
     [gameOver]="gameOver"
     [highLight]="hilite_3"
-    [clickCount]="clickCount"
     (cellClickEvent)="cellClickEventHandler($event)"
   ></app-cell>
   <app-cell
     class="grid-cell-4"
     cellNumber="4"
+    [clickCount]="clickCount"
     [gameOver]="gameOver"
     [highLight]="hilite_4"
-    [clickCount]="clickCount"
     (cellClickEvent)="cellClickEventHandler($event)"
   ></app-cell>
   <app-cell
     class="grid-cell-5"
     cellNumber="5"
+    [clickCount]="clickCount"
     [gameOver]="gameOver"
     [highLight]="hilite_5"
-    [clickCount]="clickCount"
     (cellClickEvent)="cellClickEventHandler($event)"
   ></app-cell>
   <app-cell
     class="grid-cell-6"
     cellNumber="6"
+    [clickCount]="clickCount"
     [gameOver]="gameOver"
     [highLight]="hilite_6"
-    [clickCount]="clickCount"
     (cellClickEvent)="cellClickEventHandler($event)"
   ></app-cell>
   <app-cell
     class="grid-cell-7"
     cellNumber="7"
+    [clickCount]="clickCount"
     [gameOver]="gameOver"
     [highLight]="hilite_7"
-    [clickCount]="clickCount"
     (cellClickEvent)="cellClickEventHandler($event)"
   ></app-cell>
   <app-cell
     class="grid-cell-8"
     cellNumber="8"
+    [clickCount]="clickCount"
     [gameOver]="gameOver"
     [highLight]="hilite_8"
-    [clickCount]="clickCount"
     (cellClickEvent)="cellClickEventHandler($event)"
   ></app-cell>
-  <span class="footer" *ngIf="winner">{{ winner }} heeft gewonnen!</span>
+  <span class="footer">Game won by {{ winner }}</span>
 </div>
