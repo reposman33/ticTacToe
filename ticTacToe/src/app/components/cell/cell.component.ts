@@ -9,6 +9,8 @@ export class CellComponent {
   @Input() cellNumber: number;
   @Input() clickCount: number;
   @Input() gameOver: boolean;
+  @Input() highLight: boolean;
+
   @Output()
   cellClickEvent = new EventEmitter<object>();
   filled: boolean;
