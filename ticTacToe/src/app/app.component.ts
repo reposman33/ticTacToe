@@ -52,8 +52,6 @@ export class AppComponent {
       this.score[this.winner] += 1;
     }
     this.clickCount++;
-    this.reset = false;
-    console.log(`this.reset = ${this.reset}`);
   }
 
   determineWinner() {
