@@ -46,7 +46,7 @@ export class AppComponent {
 
   cellClickEventHandler(data: { cellNumber: number; sign: string }) {
     this.boardModel[data.cellNumber] = data.sign;
-    this.winner = this.determineWinner();
+    this.winner = this.determineWinner(this.boardModel);
     if (this.winner != "") {
       this.gameOver = true;
       this.score[this.winner] += 1;
@@ -54,21 +54,14 @@ export class AppComponent {
     this.clickCount++;
   }
 
-  determineWinner() {
+  determineWinner(board) {
     let winner = "";
 
     for (let i = 0; i < 9; i += 3) {
       // determine rows
-      if (
-        this.boardModel[i] != null &&
-        this.boardModel[i + 1] != null &&
-        this.boardModel[i + 2] != null
-      ) {
-        if (
-          this.boardModel[i] === this.boardModel[i + 1] &&
-          this.boardModel[i + 1] === this.boardModel[i + 2]
-        ) {
-          winner = this.boardModel[i];
+      if (board[i] != null && board[i + 1] != null && board[i + 2] != null) {
+        if (board[i] === board[i + 1] && board[i + 1] === board[i + 2]) {
+          winner = board[i];
           this.highlightRow(i);
         }
       }
@@ -76,45 +69,24 @@ export class AppComponent {
 
     // determine columns
     for (let i = 0; i < 3; i++) {
-      if (
-        this.boardModel[i] != null &&
-        this.boardModel[i + 3] != null &&
-        this.boardModel[i + 6] != null
-      ) {
-        if (
-          this.boardModel[i] === this.boardModel[i + 3] &&
-          this.boardModel[i + 3] === this.boardModel[i + 6]
-        ) {
-          winner = this.boardModel[i];
+      if (board[i] != null && board[i + 3] != null && board[i + 6] != null) {
+        if (board[i] === board[i + 3] && board[i + 3] === board[i + 6]) {
+          winner = board[i];
           this.highlightColumn(i);
         }
       }
     }
     // determine diagonals: top left to bottom right
-    if (
-      this.boardModel[0] != null &&
-      this.boardModel[4] != null &&
-      this.boardModel[8] != null
-    ) {
-      if (
-        this.boardModel[0] === this.boardModel[4] &&
-        this.boardModel[4] === this.boardModel[8]
-      ) {
-        winner = this.boardModel[0];
+    if (board[0] != null && board[4] != null && board[8] != null) {
+      if (board[0] === board[4] && board[4] === board[8]) {
+        winner = board[0];
         this.highlightDiagonalTopLeftToBottom(0);
       }
     }
     // determine diagonals: top right to bottom left
-    if (
-      this.boardModel[2] != null &&
-      this.boardModel[4] != null &&
-      this.boardModel[6] != null
-    ) {
-      if (
-        this.boardModel[2] === this.boardModel[4] &&
-        this.boardModel[4] === this.boardModel[6]
-      ) {
-        winner = this.boardModel[2];
+    if (board[2] != null && board[4] != null && board[6] != null) {
+      if (board[2] === board[4] && board[4] === board[6]) {
+        winner = board[2];
         this.highlightDiagonalTopRightToBottom(2);
       }
     }
