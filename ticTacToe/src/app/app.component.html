@@ -5,6 +5,7 @@
     [clickCount]="clickCount"
     [gameOver]="gameOver"
     [highLight]="hilite_0"
+    [reset]="reset"
     (cellClickEvent)="cellClickEventHandler($event)"
   ></app-cell>
   <app-cell
@@ -13,6 +14,7 @@
     [clickCount]="clickCount"
     [gameOver]="gameOver"
     [highLight]="hilite_1"
+    [reset]="reset"
     (cellClickEvent)="cellClickEventHandler($event)"
   ></app-cell>
   <app-cell
@@ -21,6 +23,7 @@
     [clickCount]="clickCount"
     [gameOver]="gameOver"
     [highLight]="hilite_2"
+    [reset]="reset"
     (cellClickEvent)="cellClickEventHandler($event)"
   ></app-cell>
   <app-cell
@@ -29,6 +32,7 @@
     [clickCount]="clickCount"
     [gameOver]="gameOver"
     [highLight]="hilite_3"
+    [reset]="reset"
     (cellClickEvent)="cellClickEventHandler($event)"
   ></app-cell>
   <app-cell
@@ -37,6 +41,7 @@
     [clickCount]="clickCount"
     [gameOver]="gameOver"
     [highLight]="hilite_4"
+    [reset]="reset"
     (cellClickEvent)="cellClickEventHandler($event)"
   ></app-cell>
   <app-cell
@@ -45,6 +50,7 @@
     [clickCount]="clickCount"
     [gameOver]="gameOver"
     [highLight]="hilite_5"
+    [reset]="reset"
     (cellClickEvent)="cellClickEventHandler($event)"
   ></app-cell>
   <app-cell
@@ -53,6 +59,7 @@
     [clickCount]="clickCount"
     [gameOver]="gameOver"
     [highLight]="hilite_6"
+    [reset]="reset"
     (cellClickEvent)="cellClickEventHandler($event)"
   ></app-cell>
   <app-cell
@@ -61,6 +68,7 @@
     [clickCount]="clickCount"
     [gameOver]="gameOver"
     [highLight]="hilite_7"
+    [reset]="reset"
     (cellClickEvent)="cellClickEventHandler($event)"
   ></app-cell>
   <app-cell
@@ -69,7 +77,18 @@
     [clickCount]="clickCount"
     [gameOver]="gameOver"
     [highLight]="hilite_8"
+    [reset]="reset"
     (cellClickEvent)="cellClickEventHandler($event)"
   ></app-cell>
-  <span class="footer">Game won by {{ winner }}</span>
+  <div class="footer">
+    <div>Leaderboard</div>
+    <div>Score X: {{ score.X }}</div>
+    <div>Score O: {{ score.O }}</div>
+    <button
+      [ngClass]="{ flash: gameOver || clickCount > 8 }"
+      (click)="onGameOver()"
+    >
+      Play it again! [{{ clickCount }}]
+    </button>
+  </div>
 </div>

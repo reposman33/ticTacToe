@@ -1,4 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  SimpleChanges
+} from "@angular/core";
 
 @Component({
   selector: "app-cell",
@@ -10,24 +17,26 @@ export class CellComponent {
   @Input() clickCount: number;
   @Input() gameOver: boolean;
   @Input() highLight: boolean;
+  @Input() reset: boolean;
 
   @Output()
   cellClickEvent = new EventEmitter<object>();
-  filled: boolean;
   sign: string = "";
 
-  constructor() {
-    this.filled = false;
-  }
+  constructor() {}
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.reset && changes.reset.currentValue) {
+      this.sign = "";
+    }
+  }
   onClick() {
-    if (!this.filled && !this.gameOver) {
+    if (this.sign === "" && !this.gameOver) {
       this.sign = this.clickCount % 2 ? "O" : "X";
       this.cellClickEvent.emit({
         cellNumber: this.cellNumber,
         sign: this.sign
       });
-      this.filled = true;
     }
   }
 }

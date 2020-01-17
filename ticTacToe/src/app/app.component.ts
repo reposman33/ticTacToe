@@ -21,16 +21,18 @@ export class AppComponent {
   hilite_7: boolean;
   hilite_8: boolean;
   score: object;
+  reset: boolean;
 
   constructor() {
     this.title = "ticTacToe";
-    this.clickCount = 0;
     this.score = { X: 0, O: 0 };
     this.initGame();
+    this.reset = false;
   }
 
   initGame() {
     this.boardModel = [null, null, null, null, null, null, null, null, null];
+    this.clickCount = 0;
     this.winner = "";
     this.gameOver = false;
     this.hilite_0 = false;
@@ -42,6 +44,7 @@ export class AppComponent {
     this.hilite_6 = false;
     this.hilite_7 = false;
     this.hilite_8 = false;
+    this.reset = true; // reset the game
   }
 
   cellClickEventHandler(data: { cellNumber: number; sign: string }) {
@@ -52,6 +55,7 @@ export class AppComponent {
       this.score[this.winner] += 1;
     }
     this.clickCount++;
+    if (this.reset) this.reset = false;
   }
 
   determineWinner(board) {
@@ -90,6 +94,7 @@ export class AppComponent {
         this.highlightDiagonalTopRightToBottom(2);
       }
     }
+
     return winner;
   }
 
