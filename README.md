@@ -1,19 +1,27 @@
-## Angular Exercise: TIC-TAC-TOE
+# TicTacToe
 
- * Create a web interface that allows a user to play at tic tac toe
- * The interface should display a 3x3 grid where to play
- * The interface should show the play turn X or O
- * As the user click on a cell of the grid it should see a X or an O
- * The user should not be able to click on a cell that is already filled
- * If the user place three items in a row, a WIN message should be shown 
- * If the grid is filled and no winner a message should be shown 
- * The user should be able to start a new game
-Would represent a plus if
- * The user can play against the computer
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.8.
 
-## Expected Deliverables
+## Development server
 
-* Has to be deployable, `npm install` should install all dependencies 
-and allow to run app from command line
-* Has to be testable, `npm test` should run all tests
-* Has repository created with git: there should be a git history which will show how the work has been realized
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+
+## Code scaffolding
+
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+
+## Build
+
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+
+## Running unit tests
+
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+## Running end-to-end tests
+
+Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+
+## Further help
+
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
