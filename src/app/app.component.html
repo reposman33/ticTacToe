@@ -90,5 +90,11 @@
     >
       Play it again!
     </button>
+
+    <span>Played games:</span>
+    <ul>
+      <li *ngFor="let id of games" (click)="onGetGame(id)">{{ id }}</li>
+    </ul>
+    {{ savedGame[0] | json }}
   </div>
 </div>

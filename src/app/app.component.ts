@@ -1,4 +1,6 @@
 import { Component } from "@angular/core";
+import { ApiService } from "./services/api.service";
+import { Move } from "./models/move";
 
 @Component({
   selector: "app-root",
@@ -22,8 +24,10 @@ export class AppComponent {
   hilite_8: boolean;
   score: object;
   reset: boolean;
+  games = [];
+  savedGame = {};
 
-  constructor() {
+  constructor(private api: ApiService) {
     this.title = "ticTacToe";
     this.score = { X: 0, O: 0 };
     this.initGame();
@@ -45,16 +49,20 @@ export class AppComponent {
     this.hilite_7 = false;
     this.hilite_8 = false;
     this.reset = true; // reset the game
+    this.api.initGame();
   }
 
-  cellClickEventHandler(data: { cellNumber: number; sign: string }) {
+  cellClickEventHandler(data: Move) {
     this.boardModel[data.cellNumber] = data.sign;
+    this.clickCount++;
+    this.api.saveMove(data);
     this.winner = this.determineWinner(this.boardModel);
-    if (this.winner != "") {
+    if (this.winner != "" || this.clickCount > 8) {
       this.gameOver = true;
       this.score[this.winner] += 1;
+      this.api.saveGame();
+      this.games = this.api.getGames().map(game => game.id);
     }
-    this.clickCount++;
     if (this.reset) this.reset = false;
   }
 
@@ -127,5 +135,9 @@ export class AppComponent {
 
   onGameOver() {
     this.initGame();
+  }
+
+  onGetGame(id: number) {
+    this.savedGame = this.api.getGame(id);
   }
 }
