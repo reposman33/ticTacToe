@@ -5,27 +5,41 @@ import { Move } from "../models/move";
   providedIn: "root"
 })
 export class ApiService {
-  game = {};
   games = [];
   gameIndex: number = 0;
 
   constructor() {}
 
   initGame() {
-    this.games.push({ id: "next" });
+    const game = {
+      id: this.games.length + 1,
+      0: null,
+      1: null,
+      2: null,
+      3: null,
+      4: null,
+      5: null,
+      6: null,
+      7: null,
+      8: null
+    };
+
+    this.games.push(game);
     this.gameIndex = this.games.length - 1;
   }
 
-  saveGame() {
-    this.games[this.gameIndex]["id"] = new Date().toUTCString();
-  }
+  saveGame() {}
 
   saveMove(data: Move) {
     this.games[this.gameIndex][data.cellNumber] = data.sign;
   }
 
-  getGame(key) {
-    return this.games.filter(game => game.id === key);
+  getGameById(id) {
+    return this.games.filter(game => game.id === id);
+  }
+
+  getLastGame() {
+    return this.games[this.gameIndex];
   }
 
   getGames() {

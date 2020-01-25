@@ -10,7 +10,6 @@ import { Move } from "./models/move";
 export class AppComponent {
   title: string;
   clickCount: number;
-  boardModel: Array<string | null>;
   winner: string;
   gameOver: boolean;
   hilite_0: boolean;
@@ -24,7 +23,7 @@ export class AppComponent {
   hilite_8: boolean;
   score: object;
   reset: boolean;
-  games = [];
+  gamesList: number[] = [];
   savedGame = {};
 
   constructor(private api: ApiService) {
@@ -35,7 +34,6 @@ export class AppComponent {
   }
 
   initGame() {
-    this.boardModel = [null, null, null, null, null, null, null, null, null];
     this.clickCount = 0;
     this.winner = "";
     this.gameOver = false;
@@ -53,15 +51,16 @@ export class AppComponent {
   }
 
   cellClickEventHandler(data: Move) {
-    this.boardModel[data.cellNumber] = data.sign;
     this.clickCount++;
     this.api.saveMove(data);
-    this.winner = this.determineWinner(this.boardModel);
+    this.winner = this.determineWinner(this.api.getLastGame());
     if (this.winner != "" || this.clickCount > 8) {
       this.gameOver = true;
-      this.score[this.winner] += 1;
+      // do not add to score when draw
+      this.winner != "" && (this.score[this.winner] += 1);
       this.api.saveGame();
-      this.games = this.api.getGames().map(game => game.id);
+      // retrieve the game Ids to display
+      this.gamesList = this.api.getGames().map(game => game.id);
     }
     if (this.reset) this.reset = false;
   }
@@ -137,7 +136,7 @@ export class AppComponent {
     this.initGame();
   }
 
-  onGetGame(id: number) {
-    this.savedGame = this.api.getGame(id);
+  onRestoreGame(id: number) {
+    this.savedGame = this.api.getGameById(id);
   }
 }

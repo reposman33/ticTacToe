@@ -87,14 +87,16 @@
     <button
       [ngClass]="{ flash: gameOver || clickCount > 8 }"
       (click)="onGameOver()"
+      [disabled]="clickCount === 0"
     >
       Play it again!
     </button>
 
-    <span>Played games:</span>
+    <div>Played games:</div>
     <ul>
-      <li *ngFor="let id of games" (click)="onGetGame(id)">{{ id }}</li>
+      <li *ngFor="let id of gamesList">
+        <button (click)="onRestoreGame(id)">{{ id }}</button>
+      </li>
     </ul>
-    {{ savedGame[0] | json }}
   </div>
 </div>
