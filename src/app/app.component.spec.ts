@@ -1,9 +1,10 @@
 import { TestBed, async } from "@angular/core/testing";
 import { AppComponent } from "./app.component";
 import { CellComponent } from "./components/cell/cell.component";
+import { ApiService } from "./services/api.service";
 
 describe("AppComponent", () => {
-  const appComponent = new AppComponent();
+  const appComponent = new AppComponent(new ApiService());
   let boardModel = [];
 
   beforeEach(async(() => {

@@ -10,39 +10,20 @@ export class ApiService {
 
   constructor() {}
 
-  initGame() {
-    const game = {
-      id: this.games.length + 1,
-      0: null,
-      1: null,
-      2: null,
-      3: null,
-      4: null,
-      5: null,
-      6: null,
-      7: null,
-      8: null
-    };
-
-    this.games.push(game);
+  initGame(): void {
+    this.games.push([null, null, null, null, null, null, null, null, null]);
     this.gameIndex = this.games.length - 1;
   }
 
-  saveGame() {}
-
-  saveMove(data: Move) {
+  saveMove(data: Move): void {
     this.games[this.gameIndex][data.cellNumber] = data.sign;
   }
 
-  getGameById(id) {
-    return this.games.filter(game => game.id === id);
-  }
-
-  getLastGame() {
+  getLastGame(): [] {
     return this.games[this.gameIndex];
   }
 
-  getGames() {
+  getGames(): [][] {
     return this.games;
   }
 }

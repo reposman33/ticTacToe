@@ -23,8 +23,6 @@ export class AppComponent {
   hilite_8: boolean;
   score: object;
   reset: boolean;
-  gamesList: number[] = [];
-  savedGame = {};
 
   constructor(private api: ApiService) {
     this.title = "ticTacToe";
@@ -58,9 +56,6 @@ export class AppComponent {
       this.gameOver = true;
       // do not add to score when draw
       this.winner != "" && (this.score[this.winner] += 1);
-      this.api.saveGame();
-      // retrieve the game Ids to display
-      this.gamesList = this.api.getGames().map(game => game.id);
     }
     if (this.reset) this.reset = false;
   }
@@ -68,40 +63,45 @@ export class AppComponent {
   determineWinner(board) {
     let winner = "";
 
-    for (let i = 0; i < 9; i += 3) {
-      // determine rows
+    // determine row equality
+    for (let i = 0; i < 7; i += 3) {
       if (board[i] != null && board[i + 1] != null && board[i + 2] != null) {
         if (board[i] === board[i + 1] && board[i + 1] === board[i + 2]) {
           winner = board[i];
           this.highlightRow(i);
+          break;
         }
       }
     }
-
-    // determine columns
-    for (let i = 0; i < 3; i++) {
-      if (board[i] != null && board[i + 3] != null && board[i + 6] != null) {
-        if (board[i] === board[i + 3] && board[i + 3] === board[i + 6]) {
-          winner = board[i];
-          this.highlightColumn(i);
+    // determine column equality
+    if (winner === "") {
+      for (let i = 0; i < 3; i++) {
+        if (board[i] != null && board[i + 3] != null && board[i + 6] != null) {
+          if (board[i] === board[i + 3] && board[i + 3] === board[i + 6]) {
+            winner = board[i];
+            this.highlightColumn(i);
+            break;
+          }
         }
       }
     }
-    // determine diagonals: top left to bottom right
-    if (board[0] != null && board[4] != null && board[8] != null) {
-      if (board[0] === board[4] && board[4] === board[8]) {
-        winner = board[0];
-        this.highlightDiagonalTopLeftToBottom(0);
+    // determine diagonal equality: top left to bottom right
+    if (winner === "") {
+      if (board[0] != null && board[4] != null && board[8] != null) {
+        if (board[0] === board[4] && board[4] === board[8]) {
+          winner = board[0];
+          this.highlightDiagonalTopLeftToBottom(0);
+        }
       }
-    }
-    // determine diagonals: top right to bottom left
-    if (board[2] != null && board[4] != null && board[6] != null) {
-      if (board[2] === board[4] && board[4] === board[6]) {
-        winner = board[2];
-        this.highlightDiagonalTopRightToBottom(2);
-      }
-    }
 
+      if (board[2] != null && board[4] != null && board[6] != null) {
+        // determine diagonals equality: top right to bottom left
+        if (board[2] === board[4] && board[4] === board[6]) {
+          winner = board[2];
+          this.highlightDiagonalTopRightToBottom(2);
+        }
+      }
+    }
     return winner;
   }
 
@@ -134,9 +134,5 @@ export class AppComponent {
 
   onGameOver() {
     this.initGame();
-  }
-
-  onRestoreGame(id: number) {
-    this.savedGame = this.api.getGameById(id);
   }
 }
