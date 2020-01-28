@@ -1,42 +1,43 @@
 import {
   Component,
-  OnInit,
   Input,
   Output,
   EventEmitter,
+  SimpleChange,
+  OnChanges,
   SimpleChanges
 } from "@angular/core";
+import { Move } from "src/app/models/move";
+import { isObject } from "util";
 
 @Component({
   selector: "app-cell",
   templateUrl: "./cell.component.html",
   styleUrls: ["./cell.component.scss"]
 })
-export class CellComponent {
+export class CellComponent implements OnChanges {
+  @Input() gameModel: Move[];
   @Input() cellNumber: number;
-  @Input() clickCount: number;
-  @Input() gameOver: boolean;
-  @Input() highLight: boolean;
-  @Input() reset: boolean;
 
-  @Output()
-  cellClickEvent = new EventEmitter<object>();
-  sign: string = "";
+  @Output() cellClickEvent = new EventEmitter<number>();
+  sign: string;
+  highlight: boolean;
 
-  constructor() {}
+  constructor() {
+    this.sign = "";
+  }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes.reset && changes.reset.currentValue) {
-      this.sign = "";
+  onClick() {
+    if (this.sign === "") {
+      this.cellClickEvent.emit(this.cellNumber);
     }
   }
-  onClick() {
-    if (this.sign === "" && !this.gameOver) {
-      this.sign = this.clickCount % 2 ? "O" : "X";
-      this.cellClickEvent.emit({
-        cellNumber: this.cellNumber,
-        sign: this.sign
-      });
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (!changes.gameModel.firstChange) {
+      this.sign = changes.gameModel.currentValue[this.cellNumber].sign;
+      this.highlight =
+        changes.gameModel.currentValue[this.cellNumber].highlight;
     }
   }
 }

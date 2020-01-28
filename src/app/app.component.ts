@@ -9,77 +9,69 @@ import { Move } from "./models/move";
 })
 export class AppComponent {
   title: string;
+  gameModel: Move[];
   clickCount: number;
-  winner: string;
-  gameOver: boolean;
-  hilite_0: boolean;
-  hilite_1: boolean;
-  hilite_2: boolean;
-  hilite_3: boolean;
-  hilite_4: boolean;
-  hilite_5: boolean;
-  hilite_6: boolean;
-  hilite_7: boolean;
-  hilite_8: boolean;
   score: object;
-  reset: boolean;
 
   constructor(private api: ApiService) {
     this.title = "ticTacToe";
     this.score = { X: 0, O: 0 };
     this.initGame();
-    this.reset = false;
   }
 
   initGame() {
     this.clickCount = 0;
-    this.winner = "";
-    this.gameOver = false;
-    this.hilite_0 = false;
-    this.hilite_1 = false;
-    this.hilite_2 = false;
-    this.hilite_3 = false;
-    this.hilite_4 = false;
-    this.hilite_5 = false;
-    this.hilite_6 = false;
-    this.hilite_7 = false;
-    this.hilite_8 = false;
-    this.reset = true; // reset the game
     this.api.initGame();
+    this.gameModel = this.api.getCurrentGame();
   }
 
-  cellClickEventHandler(data: Move) {
-    this.clickCount++;
-    this.api.saveMove(data);
-    this.winner = this.determineWinner(this.api.getLastGame());
-    if (this.winner != "" || this.clickCount > 8) {
-      this.gameOver = true;
+  cellClickEventHandler(cellNumber) {
+    // determine sign to display in cell
+    const sign = this.clickCount++ % 2 ? "X" : "O";
+    this.api.saveMove({ cellNumber, sign: sign, highlight: false });
+    // retrieve current game so that cells can update through data binding
+    this.gameModel = this.api.getCurrentGame();
+    let winner = this.determineWinner(this.gameModel);
+    if (winner != "") {
       // do not add to score when draw
-      this.winner != "" && (this.score[this.winner] += 1);
+      this.score[winner] += 1;
+      winner = "";
     }
-    if (this.reset) this.reset = false;
   }
 
   determineWinner(board) {
     let winner = "";
-
-    // determine row equality
+    // determine row equality: scan 3 rows
     for (let i = 0; i < 7; i += 3) {
-      if (board[i] != null && board[i + 1] != null && board[i + 2] != null) {
-        if (board[i] === board[i + 1] && board[i + 1] === board[i + 2]) {
-          winner = board[i];
-          this.highlightRow(i);
+      if (
+        board[i]["sign"] != "" &&
+        board[i + 1]["sign"] != "" &&
+        board[i + 2]["sign"] != ""
+      ) {
+        if (
+          board[i]["sign"] === board[i + 1]["sign"] &&
+          board[i + 1]["sign"] === board[i + 2]["sign"]
+        ) {
+          winner = board[i]["sign"];
+          this.gameModel = this.highlightRow(i);
           break;
         }
       }
     }
-    // determine column equality
+    // determine column equality: scan 3 columns
     if (winner === "") {
       for (let i = 0; i < 3; i++) {
-        if (board[i] != null && board[i + 3] != null && board[i + 6] != null) {
-          if (board[i] === board[i + 3] && board[i + 3] === board[i + 6]) {
-            winner = board[i];
-            this.highlightColumn(i);
+        if (
+          board[i]["sign"] != "" &&
+          board[i + 3]["sign"] != "" &&
+          board[i + 6]["sign"] != ""
+        ) {
+          if (
+            board[i]["sign"] === board[i + 3]["sign"] &&
+            board[i + 3]["sign"] === board[i + 6]["sign"]
+          ) {
+            winner = board[i]["sign"];
+            this.gameModel = this.highlightColumn(i);
             break;
           }
         }
@@ -87,49 +79,72 @@ export class AppComponent {
     }
     // determine diagonal equality: top left to bottom right
     if (winner === "") {
-      if (board[0] != null && board[4] != null && board[8] != null) {
-        if (board[0] === board[4] && board[4] === board[8]) {
-          winner = board[0];
-          this.highlightDiagonalTopLeftToBottom(0);
+      if (
+        board[0]["sign"] != "" &&
+        board[4]["sign"] != "" &&
+        board[8]["sign"] != ""
+      ) {
+        if (
+          board[0]["sign"] === board[4]["sign"] &&
+          board[4]["sign"] === board[8]["sign"]
+        ) {
+          winner = board[0]["sign"];
+          this.gameModel = this.highlightDiagonalTopLeftToBottom();
         }
       }
 
-      if (board[2] != null && board[4] != null && board[6] != null) {
+      if (
+        board[2]["sign"] != "" &&
+        board[4]["sign"] != "" &&
+        board[6]["sign"] != ""
+      ) {
         // determine diagonals equality: top right to bottom left
-        if (board[2] === board[4] && board[4] === board[6]) {
-          winner = board[2];
-          this.highlightDiagonalTopRightToBottom(2);
+        if (
+          board[2]["sign"] === board[4]["sign"] &&
+          board[4]["sign"] === board[6]["sign"]
+        ) {
+          winner = board[2]["sign"];
+          this.gameModel = this.highlightDiagonalTopRightToBottom();
         }
       }
     }
+    console.log(this.gameModel);
     return winner;
   }
 
-  highlightRow(startIndex) {
-    for (let i = 0; i < 3; i++) {
-      this[`hilite_${startIndex++}`] = true;
-    }
+  highlightRow(startIndex): Move[] {
+    return this.api.getCurrentGame().map((cell, index) => {
+      // there are 3 possible rows to highlight, starting in cellNumber 0,3 or 6
+      cell.highlight = index >= startIndex && index <= startIndex + 2;
+      return cell;
+    });
   }
 
-  highlightColumn(startIndex) {
-    for (let i = 0; i < 3; i++) {
-      this[`hilite_${startIndex}`] = true;
-      startIndex += 3;
-    }
+  highlightColumn(startIndex): Move[] {
+    return this.api.getCurrentGame().map((cell, index) => {
+      // there are 3 posible columns to highlight, starting in cellNumber 0,1 or 2
+      cell.highlight =
+        index === startIndex ||
+        index === startIndex + 3 ||
+        index === startIndex + 6;
+      return cell;
+    });
   }
 
-  highlightDiagonalTopLeftToBottom(startIndex) {
-    for (let i = 0; i < 3; i++) {
-      this[`hilite_${startIndex}`] = true;
-      startIndex += 4;
-    }
+  highlightDiagonalTopLeftToBottom(): Move[] {
+    return this.api.getCurrentGame().map((cell, index) => {
+      // there is only 1 diagonal to highight
+      cell.highlight = index === 0 || index === 4 || index === 8;
+      return cell;
+    });
   }
 
-  highlightDiagonalTopRightToBottom(startIndex) {
-    for (let i = 0; i < 3; i++) {
-      this[`hilite_${startIndex}`] = true;
-      startIndex += 2;
-    }
+  highlightDiagonalTopRightToBottom(): Move[] {
+    return this.api.getCurrentGame().map((cell, index) => {
+      // there is only 1 diagonal to highight
+      cell.highlight = index === 2 || index === 4 || index === 6;
+      return cell;
+    });
   }
 
   onGameOver() {

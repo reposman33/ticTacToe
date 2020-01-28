@@ -5,25 +5,46 @@ import { Move } from "../models/move";
   providedIn: "root"
 })
 export class ApiService {
-  games = [];
-  gameIndex: number = 0;
+  game: Move[] = [];
+  playedGames: string[][] = [];
 
   constructor() {}
 
   initGame(): void {
-    this.games.push([null, null, null, null, null, null, null, null, null]);
-    this.gameIndex = this.games.length - 1;
+    this.game = [
+      { cellNumber: 0, sign: "", highlight: false },
+      { cellNumber: 1, sign: "", highlight: false },
+      { cellNumber: 2, sign: "", highlight: false },
+      { cellNumber: 3, sign: "", highlight: false },
+      { cellNumber: 4, sign: "", highlight: false },
+      { cellNumber: 5, sign: "", highlight: false },
+      { cellNumber: 6, sign: "", highlight: false },
+      { cellNumber: 7, sign: "", highlight: false },
+      { cellNumber: 8, sign: "", highlight: false }
+    ];
   }
 
   saveMove(data: Move): void {
-    this.games[this.gameIndex][data.cellNumber] = data.sign;
+    this.game[data.cellNumber] = data;
   }
 
-  getLastGame(): [] {
-    return this.games[this.gameIndex];
+  getCurrentGame(): Move[] {
+    // we have to return a new array each time or Angular's ngOnChanges will not detect changes
+    const game = [...this.game];
+    return game;
   }
 
-  getGames(): [][] {
-    return this.games;
+  getPlayedGames(): string[][] {
+    return this.playedGames;
+  }
+
+  getPlayedGame(index): string[] {
+    return this.playedGames[index];
+  }
+
+  addPlayedGame(game: []) {
+    // make a clone from game, no reference as that will be mutated
+    const playedGame = [...game];
+    this.playedGames.push(playedGame);
   }
 }
