@@ -55,6 +55,7 @@ export class AppComponent {
     if (this.clickCount > 8 || this.winner !== "") {
       this.gameWon(this.winner);
     }
+    return this.winner;
   }
 
   // get the sign ('X' or 'O') to display in cell
