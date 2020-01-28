@@ -37,7 +37,7 @@ describe("AppComponent", () => {
       { cellNumber: 7, sign: "X", highlight: false },
       { cellNumber: 8, sign: "X", highlight: false }
     ];
-    expect(appComponent.determineWinner(boardModel)).toBe("O");
+    expect(appComponent.checkForWinner(boardModel)).toBe("O");
 
     boardModel = [
       { cellNumber: 0, sign: "", highlight: false },
@@ -50,7 +50,7 @@ describe("AppComponent", () => {
       { cellNumber: 7, sign: "", highlight: false },
       { cellNumber: 8, sign: "", highlight: false }
     ];
-    expect(appComponent.determineWinner(boardModel)).toBe("O");
+    expect(appComponent.checkForWinner(boardModel)).toBe("O");
 
     boardModel = [
       { cellNumber: 0, sign: "", highlight: false },
@@ -63,7 +63,7 @@ describe("AppComponent", () => {
       { cellNumber: 7, sign: "X", highlight: false },
       { cellNumber: 8, sign: "X", highlight: false }
     ];
-    expect(appComponent.determineWinner(boardModel)).toBe("X");
+    expect(appComponent.checkForWinner(boardModel)).toBe("X");
   });
   it("should fail to declare a winner when there are no 3 identical adjacent cells", () => {
     boardModel = [
@@ -77,7 +77,7 @@ describe("AppComponent", () => {
       { cellNumber: 7, sign: "O", highlight: false },
       { cellNumber: 8, sign: "X", highlight: false }
     ];
-    expect(appComponent.determineWinner(boardModel)).toBe("");
+    expect(appComponent.checkForWinner(boardModel)).toBe("");
 
     boardModel = [
       { cellNumber: 0, sign: "O", highlight: false },
@@ -90,7 +90,7 @@ describe("AppComponent", () => {
       { cellNumber: 7, sign: "O", highlight: false },
       { cellNumber: 8, sign: "X", highlight: false }
     ];
-    expect(appComponent.determineWinner(boardModel)).toBe("");
+    expect(appComponent.checkForWinner(boardModel)).toBe("");
 
     boardModel = [
       { cellNumber: 0, sign: "X", highlight: false },
@@ -103,7 +103,7 @@ describe("AppComponent", () => {
       { cellNumber: 7, sign: "X", highlight: false },
       { cellNumber: 8, sign: "O", highlight: false }
     ];
-    expect(appComponent.determineWinner(boardModel)).toBe("");
+    expect(appComponent.checkForWinner(boardModel)).toBe("");
   });
   it("should correctly determine the winner when 3 identical cells are vertical", () => {
     boardModel = [
@@ -112,12 +112,12 @@ describe("AppComponent", () => {
       { cellNumber: 2, sign: "O", highlight: false },
       { cellNumber: 3, sign: "X", highlight: false },
       { cellNumber: 4, sign: "O", highlight: false },
-      { cellNumber: 5, sign: "O", highlight: false },
+      { cellNumber: 5, sign: "", highlight: false },
       { cellNumber: 6, sign: "X", highlight: false },
-      { cellNumber: 7, sign: "O", highlight: false },
+      { cellNumber: 7, sign: "X", highlight: false },
       { cellNumber: 8, sign: "O", highlight: false }
     ];
-    expect(appComponent.determineWinner(boardModel)).toBe("X");
+    expect(appComponent.checkForWinner(boardModel)).toBe("X");
 
     boardModel = [
       { cellNumber: 0, sign: "O", highlight: false },
@@ -130,7 +130,7 @@ describe("AppComponent", () => {
       { cellNumber: 7, sign: "X", highlight: false },
       { cellNumber: 8, sign: "", highlight: false }
     ];
-    expect(appComponent.determineWinner(boardModel)).toBe("X");
+    expect(appComponent.checkForWinner(boardModel)).toBe("X");
 
     boardModel = [
       { cellNumber: 0, sign: "O", highlight: false },
@@ -143,7 +143,7 @@ describe("AppComponent", () => {
       { cellNumber: 7, sign: "", highlight: false },
       { cellNumber: 8, sign: "X", highlight: false }
     ];
-    expect(appComponent.determineWinner(boardModel)).toBe("X");
+    expect(appComponent.checkForWinner(boardModel)).toBe("X");
   });
 
   it("should correctly determine the winner when 3 identical cells are diagonal", () => {
@@ -158,7 +158,7 @@ describe("AppComponent", () => {
       { cellNumber: 7, sign: "O", highlight: false },
       { cellNumber: 8, sign: "X", highlight: false }
     ];
-    expect(appComponent.determineWinner(boardModel)).toBe("X");
+    expect(appComponent.checkForWinner(boardModel)).toBe("X");
 
     boardModel = [
       { cellNumber: 0, sign: "X", highlight: false },
@@ -171,6 +171,6 @@ describe("AppComponent", () => {
       { cellNumber: 7, sign: "X", highlight: false },
       { cellNumber: 8, sign: "X", highlight: false }
     ];
-    expect(appComponent.determineWinner(boardModel)).toBe("O");
+    expect(appComponent.checkForWinner(boardModel)).toBe("O");
   });
 });
