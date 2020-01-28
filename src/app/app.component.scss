@@ -1,15 +1,15 @@
 .container {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr;
   grid-template-areas:
-    "cell-0 cell-1 cell-2"
-    "cell-3 cell-4 cell-5"
-    "cell-6 cell-7 cell-8"
-    "footer footer footer";
+    ". . cell-0 cell-1 cell-2 ."
+    ". . cell-3 cell-4 cell-5 ."
+    ". . cell-6 cell-7 cell-8 ."
+    "footer footer footer footer footer footer";
   grid-gap: 0;
   height: 280px;
-  width: 200px;
+  width: 400px;
   margin: 0 auto;
 }
 
