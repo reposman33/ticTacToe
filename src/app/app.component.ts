@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { ApiService } from "./services/api.service";
+import { TicTacToeService } from "./services/ticTacToe.service";
 import { Move } from "./models/move";
 
 @Component({
@@ -13,7 +13,7 @@ export class AppComponent {
   clickCount: number;
   score: object;
 
-  constructor(private api: ApiService) {
+  constructor(private ticTacToeService: TicTacToeService) {
     this.title = "ticTacToe";
     this.score = { X: 0, O: 0 };
     this.initGame();
@@ -21,16 +21,20 @@ export class AppComponent {
 
   initGame() {
     this.clickCount = 0;
-    this.api.initGame();
-    this.gameModel = this.api.getCurrentGame();
+    this.ticTacToeService.initGame();
+    this.gameModel = this.ticTacToeService.getCurrentGame();
   }
 
   cellClickEventHandler(cellNumber) {
     // determine sign to display in cell
     const sign = this.clickCount++ % 2 ? "X" : "O";
-    this.api.saveMove({ cellNumber, sign: sign, highlight: false });
+    this.ticTacToeService.saveMove({
+      cellNumber,
+      sign: sign,
+      highlight: false
+    });
     // retrieve current game so that cells can update through data binding
-    this.gameModel = this.api.getCurrentGame();
+    this.gameModel = this.ticTacToeService.getCurrentGame();
     let winner = this.determineWinner(this.gameModel);
     if (winner != "") {
       // do not add to score when draw
@@ -113,7 +117,7 @@ export class AppComponent {
   }
 
   highlightRow(startIndex): Move[] {
-    return this.api.getCurrentGame().map((cell, index) => {
+    return this.ticTacToeService.getCurrentGame().map((cell, index) => {
       // there are 3 possible rows to highlight, starting in cellNumber 0,3 or 6
       cell.highlight = index >= startIndex && index <= startIndex + 2;
       return cell;
@@ -121,7 +125,7 @@ export class AppComponent {
   }
 
   highlightColumn(startIndex): Move[] {
-    return this.api.getCurrentGame().map((cell, index) => {
+    return this.ticTacToeService.getCurrentGame().map((cell, index) => {
       // there are 3 posible columns to highlight, starting in cellNumber 0,1 or 2
       cell.highlight =
         index === startIndex ||
@@ -132,7 +136,7 @@ export class AppComponent {
   }
 
   highlightDiagonalTopLeftToBottom(): Move[] {
-    return this.api.getCurrentGame().map((cell, index) => {
+    return this.ticTacToeService.getCurrentGame().map((cell, index) => {
       // there is only 1 diagonal to highight
       cell.highlight = index === 0 || index === 4 || index === 8;
       return cell;
@@ -140,7 +144,7 @@ export class AppComponent {
   }
 
   highlightDiagonalTopRightToBottom(): Move[] {
-    return this.api.getCurrentGame().map((cell, index) => {
+    return this.ticTacToeService.getCurrentGame().map((cell, index) => {
       // there is only 1 diagonal to highight
       cell.highlight = index === 2 || index === 4 || index === 6;
       return cell;

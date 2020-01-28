@@ -4,7 +4,7 @@ import { Move } from "../models/move";
 @Injectable({
   providedIn: "root"
 })
-export class ApiService {
+export class TicTacToeService {
   game: Move[] = [];
   playedGames: string[][] = [];
 
