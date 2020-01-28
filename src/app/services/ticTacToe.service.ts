@@ -1,12 +1,14 @@
 import { Injectable } from "@angular/core";
 import { Move } from "../models/move";
+import { PlayedGame } from "../models/played-game";
 
 @Injectable({
   providedIn: "root"
 })
 export class TicTacToeService {
-  game: Move[] = [];
-  playedGames: string[][] = [];
+  game: Move[] = []; // moves are ordered positionaly according to 3*3 board
+  playedGame: Move[]; // moves are chronologically ordered
+  playedGames: PlayedGame[] = [];
 
   constructor() {}
 
@@ -22,10 +24,18 @@ export class TicTacToeService {
       { cellNumber: 7, sign: "", highlight: false },
       { cellNumber: 8, sign: "", highlight: false }
     ];
+    this.playedGame = [];
   }
 
-  saveMove(data: Move): void {
+  saveMoveByBoardPosition(data: Move): void {
+    // store current move in array position corresponding to cell position in board
     this.game[data.cellNumber] = data;
+    // save move in array position in temporal fashion to be able to replay game chronologically
+    this.playedGame.push(data);
+  }
+
+  saveMoveChronological(data: Move): void {
+    this.playedGame.push(data);
   }
 
   getCurrentGame(): Move[] {
@@ -34,17 +44,21 @@ export class TicTacToeService {
     return game;
   }
 
-  getPlayedGames(): string[][] {
+  savePlayedGame(): void {
+    // make a clone from game, no reference as that will be mutated
+    this.playedGames.push({
+      id: this.playedGames.length,
+      game: [...this.playedGame]
+    });
+  }
+
+  getPlayedGames(): PlayedGame[] {
     return this.playedGames;
   }
 
-  getPlayedGame(index): string[] {
-    return this.playedGames[index];
-  }
-
-  addPlayedGame(game: []) {
-    // make a clone from game, no reference as that will be mutated
-    const playedGame = [...game];
-    this.playedGames.push(playedGame);
+  getPlayedGame(index): Move[] {
+    const playedGame = this.playedGames[index].game;
+    // don't return a reference to playedGame but return a clone
+    return [...playedGame];
   }
 }
