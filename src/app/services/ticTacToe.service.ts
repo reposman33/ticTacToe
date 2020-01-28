@@ -30,8 +30,6 @@ export class TicTacToeService {
   saveMoveByBoardPosition(data: Move): void {
     // store current move in array position corresponding to cell position in board
     this.game[data.cellNumber] = data;
-    // save move in array position in temporal fashion to be able to replay game chronologically
-    this.playedGame.push(data);
   }
 
   saveMoveChronological(data: Move): void {
