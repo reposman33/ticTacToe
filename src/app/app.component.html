@@ -64,5 +64,12 @@
     >
       Play it again!
     </button>
+    <div>
+      <ul class="playedGames">
+        <li *ngFor="let game of playedGames">
+          <button (click)="onPlayedGameClick(game.id)">{{ game.id }}</button>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
